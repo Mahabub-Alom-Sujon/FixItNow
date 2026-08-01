@@ -1,5 +1,6 @@
 import Image from "next/image";
 import {Button} from "@/components/ui/button";
+import HeroSection from "@/app/(public)/_components/home/hero-section";
 
 
 
@@ -7,7 +8,7 @@ import {Button} from "@/components/ui/button";
 export default function Home() {
   return (
     <>
-        <h1>Home Page</h1>
+        <HeroSection/>
     </>
   );
 }

@@ -1,13 +1,10 @@
 "use client";
-
 import Link from "next/link";
 import { useState } from "react";
-import { Menu, X, Wrench, User, Bell, Search } from "lucide-react";
+import {Menu, X, Wrench, User, Bell, Search, LayoutDashboard, Settings, LogOut} from "lucide-react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -17,6 +14,7 @@ import {
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import {logout} from "@/service/logout";
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
 const navItems = [
     { title: "Home", href: "/" },
@@ -57,20 +55,32 @@ type NavbarProps = {
 export default function Navbar({user} : NavbarProps) {
     const [open, setOpen] = useState(false);
     const router = useRouter()
-    const handleUserMenuAction = async (action: string) => {
-        if (action !== "logout") return;
 
+    // login state from props
+    const profile = user?.data?.profile;
+    const isLoggedIn = !!user?.success && !!profile;
+    const handleLogout = async () => {
         try {
-            await logout();
+            toast.loading("Logging out...", {id: "logout"});
 
-            toast.success("Logged out successfully");
+            await logout(); // logout function
 
-            router.push("/auth/login");
-            router.refresh();
-        } catch {
-            toast.error("Logout failed");
+            toast.success("Logged out successfully!", {
+                id: "logout",
+                description: "See you soon 👋"
+            });
+
+            router.replace("/auth/login");
+
+        } catch (error) {
+            console.error("Logout error:", error);
+
+            toast.error("Failed to logout", {
+                id: "logout",
+                description: "Please try again",
+            });
         }
-    };
+    }
     return (
         <header className="sticky top-0 z-50 w-full border-b bg-white/90 backdrop-blur-xl">
             <div className="container mx-auto flex h-20 items-center justify-between px-4">
@@ -104,75 +114,68 @@ export default function Navbar({user} : NavbarProps) {
                         <Button>Become Technician</Button>
                     </Link>
 
-                    {user?.success ? (
+                    {isLoggedIn && profile ? (
+                        /* === Logged In: User Dropdown === */
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>
-                                <Button
-                                    variant="ghost"
-                                    size="icon"
-                                    className="rounded-full"
-                                >
-                                    <User className="h-5 w-5" />
+                                <Button variant="ghost" className="relative h-9 w-9 rounded-full">
+                                    <Avatar className="h-9 w-9">
+                                        <AvatarImage src="https://github.com/shadcn.png" alt="User" />
+                                        <AvatarFallback>User</AvatarFallback>
+                                    </Avatar>
                                 </Button>
                             </DropdownMenuTrigger>
-
-                            <DropdownMenuContent align="end" className="w-60">
-                                <DropdownMenuLabel>
-                                    <div className="space-y-1">
-                                        <p className="font-medium">
-                                            {user.data?.profile?.name}
-                                        </p>
-
-                                        <p className="text-xs text-muted-foreground">
-                                            {user.data?.profile?.email}
+                            <DropdownMenuContent className="w-56" align="end" forceMount>
+                                <DropdownMenuLabel className="font-normal">
+                                    <div className="flex flex-col space-y-1">
+                                        <p className="text-sm font-medium leading-none">{user.data?.profile?.name || "Name"}</p>
+                                        <p className="text-xs leading-none text-muted-foreground">
+                                            {user.data?.profile?.email || "Email"}
                                         </p>
                                     </div>
                                 </DropdownMenuLabel>
-
                                 <DropdownMenuSeparator />
-
                                 <DropdownMenuItem asChild>
-                                    <Link href="/profile">
+                                    <Link href="/dashboard" className="cursor-pointer">
+                                        <LayoutDashboard className="mr-2 h-4 w-4" />
+                                        Dashboard
+                                    </Link>
+                                </DropdownMenuItem>
+                                <DropdownMenuItem asChild>
+                                    <Link href="/profile" className="cursor-pointer">
                                         <User className="mr-2 h-4 w-4" />
                                         Profile
                                     </Link>
                                 </DropdownMenuItem>
-
                                 <DropdownMenuItem asChild>
-                                    <Link href="/settings">
+                                    <Link href="/settings" className="cursor-pointer">
+                                        <Settings className="mr-2 h-4 w-4" />
                                         Settings
                                     </Link>
                                 </DropdownMenuItem>
-
                                 <DropdownMenuSeparator />
-
                                 <DropdownMenuItem
-                                    onClick={() => handleUserMenuAction("logout")}
+                                    className="text-destructive focus:text-destructive"
+                                    onClick={handleLogout}
                                 >
-                                    Logout
+                                    <LogOut className="mr-2 h-4 w-4" />
+                                    Log out
                                 </DropdownMenuItem>
                             </DropdownMenuContent>
                         </DropdownMenu>
                     ) : (
-                        <Link href="/auth/login">
-                            <Button variant="outline">Login</Button>
-                        </Link>
+                        /* === Not Logged In: Login + Sign Up === */
+                        <div className="hidden md:flex items-center gap-3">
+                            <Button variant="ghost" asChild>
+                                <Link href="/auth/login">Login</Link>
+                            </Button>
+                            <Button asChild>
+                                <Link href="/auth/register">Sign Up</Link>
+                            </Button>
+                        </div>
                     )}
                 </div>
 
-                {/*/!* Search *!/*/}
-                {/*<div className="hidden w-72 items-center lg:flex">*/}
-                {/*    <div className="relative w-full">*/}
-                {/*        <Search className="absolute left-3 top-3 h-4 w-4 text-slate-400" />*/}
-                {/*        <Input*/}
-                {/*            placeholder="Search services..."*/}
-                {/*            className="pl-9"*/}
-                {/*        />*/}
-                {/*    </div>*/}
-                {/*</div>*/}
-
-                {/* Actions */}
-                {/* Mobile */}
                 <Button
                     variant="ghost"
                     size="icon"
@@ -219,9 +222,10 @@ export default function Navbar({user} : NavbarProps) {
                                     <Button
                                         variant="destructive"
                                         className="w-full"
-                                        onClick={() =>
-                                            handleUserMenuAction("logout")
-                                        }
+                                        onClick={handleLogout}
+                                        // onClick={() =>
+                                        //     handleLogout("logout")
+                                        // }
                                     >
                                         Logout
                                     </Button>
