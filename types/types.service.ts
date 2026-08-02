@@ -1,0 +1,33 @@
+export interface IService {
+        id: string;
+        title: string;
+        description: string;
+        price: number;
+        duration: number;
+        serviceArea: string;
+        type: string;
+        location: string;
+        rating: number;
+        image: string | null;
+        createdAt: string;
+        updatedAt: string;
+        category: {
+            id: string;
+            name: string;
+            description: string | null;
+            icon: string | null;
+        };
+        technician: {
+            id: string;
+            averageRating: number;
+            completedJobs: number;
+            totalReviews: number;
+
+            user: {
+                id: string;
+                name: string;
+                city: string;
+                profileImage: string;
+            };
+        };
+}
