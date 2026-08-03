@@ -140,9 +140,9 @@ import ServiceCard from "./ServiceCard";
 import { IService } from "@/types/types.service";
 
 export async function ServiceList({
-                                      searchParams,
-                                  }: {
-    searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
+    searchParams,
+}: {
+searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
     const query = await searchParams;
     const result = await getServices({ query });

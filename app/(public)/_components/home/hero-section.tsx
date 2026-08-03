@@ -43,7 +43,7 @@ export default function HeroSection() {
                         </p>
 
                         {/* Search */}
-                        {/*<Card className="mt-10 border-0 p-4 shadow-xl">*/}
+                        {/*<><Card className="mt-10 border-0 p-4 shadow-xl">*/}
                         {/*    <div className="flex flex-col gap-4 md:flex-row">*/}
                         {/*        <div className="relative flex-1">*/}
                         {/*            <Search className="absolute left-4 top-3.5 h-5 w-5 text-slate-400" />*/}
@@ -58,7 +58,7 @@ export default function HeroSection() {
                         {/*            Search*/}
                         {/*        </Button>*/}
                         {/*    </div>*/}
-                        {/*</Card>*/}
+                        {/*</Card></>*/}
 
                         {/* CTA */}
                         <div className="mt-8 flex flex-wrap gap-4">

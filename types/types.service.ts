@@ -5,6 +5,7 @@ export interface IService {
         price: number;
         duration: number;
         serviceArea: string;
+        featured:boolean;
         type: string;
         location: string;
         rating: number;

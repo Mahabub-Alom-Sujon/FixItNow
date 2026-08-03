@@ -4,7 +4,6 @@ export const getServices = async ({query } : { query?: { [key: string]: string |
     if(query && query.searchTerm){
         params.set("searchTerm", query.searchTerm as string)
     }
-
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/services?${params.toString()}`, {
         cache : "no-cache",
         next : {
@@ -12,8 +11,6 @@ export const getServices = async ({query } : { query?: { [key: string]: string |
             // tags : ["premium-posts"]
         }
     });
-
     const result = await res.json();
-
     return result;
 }
