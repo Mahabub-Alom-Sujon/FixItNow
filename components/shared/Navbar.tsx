@@ -81,6 +81,24 @@ export default function Navbar({user} : NavbarProps) {
             });
         }
     }
+
+    const getDashboardHref = () => {
+        if (!profile) return "/auth/login";
+
+        switch (profile.role) {
+            case "ADMIN":
+                return "/dashboard/admin";
+
+            case "TECHNICIAN":
+                return "/dashboard/technician";
+
+            case "CUSTOMER":
+                return "/dashboard/customer";
+
+            default:
+                return "/auth/login";
+        }
+    };
     return (
         <header className="sticky top-0 z-50 w-full border-b bg-white/90 backdrop-blur-xl">
             <div className="container mx-auto flex h-20 items-center justify-between px-4">
@@ -110,9 +128,9 @@ export default function Navbar({user} : NavbarProps) {
                     <Button variant="ghost" size="icon">
                         <Bell className="h-5 w-5" />
                     </Button>
-                    <Link href="/become-technician">
-                        <Button>Become Technician</Button>
-                    </Link>
+                    {/*<Link href="/become-technician">*/}
+                    {/*    <Button>Become Technician</Button>*/}
+                    {/*</Link>*/}
 
                     {isLoggedIn && profile ? (
                         /* === Logged In: User Dropdown === */
@@ -136,7 +154,7 @@ export default function Navbar({user} : NavbarProps) {
                                 </DropdownMenuLabel>
                                 <DropdownMenuSeparator />
                                 <DropdownMenuItem asChild>
-                                    <Link href="/dashboard" className="cursor-pointer">
+                                    <Link href={getDashboardHref()} className="cursor-pointer">
                                         <LayoutDashboard className="mr-2 h-4 w-4" />
                                         Dashboard
                                     </Link>
