@@ -4,8 +4,8 @@ import { IService } from "@/types/types.service";
 import ServiceFilter from "./ServiceFilter";
 
 export async function ServiceList({
-                                      searchParams,
-                                  }: {
+  searchParams,
+}: {
     searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
     const query = await searchParams;

@@ -1,100 +1,82 @@
-"use client";
-
-import {
-    ChevronLeft,
-    ChevronRight,
-    MoreHorizontal,
-} from "lucide-react";
-
-import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import { getTechnicians } from "@/app/(public)/technicians/_actions/getTechnicians";
 
 interface PaginationProps {
-    page: number;
-    totalPages: number;
-    onPageChange: (page: number) => void;
+    searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 
-export default function Pagination({
-                                       page,
-                                       totalPages,
-                                       onPageChange,
-                                   }: PaginationProps) {
-    if (totalPages <= 1) return null;
-
-    const getPages = () => {
-        const pages: (number | "...")[] = [];
-
-        if (totalPages <= 7) {
-            for (let i = 1; i <= totalPages; i++) {
-                pages.push(i);
-            }
-
-            return pages;
-        }
-
-        pages.push(1);
-
-        if (page > 3) {
-            pages.push("...");
-        }
-
-        const start = Math.max(2, page - 1);
-        const end = Math.min(totalPages - 1, page + 1);
-
-        for (let i = start; i <= end; i++) {
-            pages.push(i);
-        }
-
-        if (page < totalPages - 2) {
-            pages.push("...");
-        }
-
-        pages.push(totalPages);
-
-        return pages;
-    };
+export default async function Pagination({
+                                             searchParams,
+                                         }: PaginationProps) {
+    const params = await searchParams;
+    const page = Number(params?.page) || 1;
+    const result = await getTechnicians({ query: params });
+    const meta = result.data?.meta;
+    if (!result.success || !meta) {
+        return null;
+    }
+    const totalPages = Math.ceil(meta.total / meta.limit);
 
     return (
-        <div className="mt-10 flex flex-wrap items-center justify-center gap-2">
-            <Button
-                variant="outline"
-                size="icon"
-                disabled={page === 1}
-                onClick={() => onPageChange(page - 1)}
-            >
-                <ChevronLeft className="h-4 w-4" />
-            </Button>
+        <>
+            <div className="mt-10 flex items-center justify-center gap-2">
+                {/* Previous */}
+                <Link
+                    href={{
+                        pathname: "/technicians",
+                        query: {
+                            ...params,
+                            page: Math.max(page - 1, 1),
+                        },
+                    }}
+                    className={`rounded-md border px-4 py-2 text-sm ${
+                        page === 1
+                            ? "pointer-events-none opacity-50"
+                            : "hover:bg-muted"
+                    }`}
+                >
+                    Previous
+                </Link>
 
-            {getPages().map((item, index) =>
-                item === "..." ? (
-                    <Button
-                        key={index}
-                        variant="ghost"
-                        size="icon"
-                        disabled
+                {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
+                    <Link
+                        key={p}
+                        href={{
+                            pathname: "/technicians",
+                            query: {
+                                ...params,
+                                page: p,
+                            },
+                        }}
+                        className={`rounded-md border px-4 py-2 text-sm ${
+                            page === p
+                                ? "bg-primary text-primary-foreground"
+                                : "hover:bg-muted"
+                        }`}
                     >
-                        <MoreHorizontal className="h-4 w-4" />
-                    </Button>
-                ) : (
-                    <Button
-                        key={item}
-                        variant={page === item ? "default" : "outline"}
-                        onClick={() => onPageChange(item)}
-                        className="min-w-10"
-                    >
-                        {item}
-                    </Button>
-                )
-            )}
+                        {p}
+                    </Link>
+                ))}
 
-            <Button
-                variant="outline"
-                size="icon"
-                disabled={page === totalPages}
-                onClick={() => onPageChange(page + 1)}
-            >
-                <ChevronRight className="h-4 w-4" />
-            </Button>
-        </div>
+                {/* Next */}
+                <Link
+                    href={{
+                        pathname: "/technicians",
+                        query: {
+                            ...params,
+                            page: Math.min(page + 1, totalPages),
+                        },
+                    }}
+                    className={`rounded-md border px-4 py-2 text-sm ${
+                        page === totalPages
+                            ? "pointer-events-none opacity-50"
+                            : "hover:bg-muted"
+                    }`}
+                >
+                    Next
+                </Link>
+            </div>
+        </>
+
     );
 }
