@@ -10,25 +10,6 @@ import { ITechnician } from "@/types/types.technicians";
 interface TechnicianCardProps {
     tech: ITechnician;
 }
-
-// interface Technician {
-//     id: number;
-//     name: string;
-//     image: string;
-//     profession: string;
-//     rating: number;
-//     reviews: number;
-//     jobs: number;
-//     experience: string;
-//     location: string;
-//     price: number;
-//     verified: boolean;
-// }
-//
-// interface TechnicianCardProps {
-//     tech: Technician;
-// }
-
 const TechnicianCard = ({ tech }: TechnicianCardProps) => {
     return (
         <Card
