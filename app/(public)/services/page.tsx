@@ -1,92 +1,13 @@
-// import ServiceFilters from "./_components/ServiceFilters";
-// import ServiceCardList from "./_components/ServiceList";
-// import ServicePagination from "./_components/ServicePagination";
-// import { getServices } from "./_actions/getServices";
-//
-// // interface SearchParams {
-// //     page?: string;
-// //     limit?: string;
-// //     searchTerm?: string;
-// //     type?: string;
-// //     location?: string;
-// //     rating?: string;
-// //     sortBy?: string;
-// //     sortOrder?: "asc" | "desc";
-// // }
-//
-// // interface ServicesPageProps {
-// //     searchParams: Promise<SearchParams>;
-// // }
-//
-// export default async function ServicesPage({
-//    searchParams,
-// }: ServicesPageProps) {
-//     const params = await searchParams;
-//
-//     const page = Number(params.page ?? "1");
-//     const limit = Number(params.limit ?? "9");
-//
-//     // Server Action
-//     const result = await getServices({
-//         page,
-//         limit,
-//         searchTerm: params.searchTerm,
-//         type: params.type,
-//         location: params.location,
-//         rating: params.rating ? Number(params.rating) : undefined,
-//         sortBy: params.sortBy,
-//         sortOrder: params.sortOrder,
-//     });
-//
-//     // Safe defaults
-//     const services = result.data?.data ?? [];
-//     const meta = result.data?.meta ?? {
-//         page: 1,
-//         limit: 9,
-//         total: 0,
-//         totalPage: 1,
-//     };
-//
-//     return (
-//         <section className="container mx-auto py-12">
-//             <div className="grid grid-cols-1 gap-6 lg:grid-cols-12">
-//                 <div className="lg:col-span-4">
-//                     <ServiceFilters
-//                         searchTerm={params.searchTerm}
-//                         location={params.location}
-//                         type={params.type}
-//                         sortBy={params.sortBy}
-//                         sortOrder={params.sortOrder}
-//                     />
-//                 </div>
-//
-//                 <div className="lg:col-span-8">
-//                     <ServiceCardList services={services} />
-//
-//                     {meta.totalPage > 1 && (
-//                         <div className="mt-8 flex justify-center">
-//                             <ServicePagination
-//                                 page={meta.page}
-//                                 totalPage={meta.totalPage}
-//                             />
-//                         </div>
-//                     )}
-//                 </div>
-//             </div>
-//         </section>
-//     );
-// }
-
 import { Suspense } from "react";
 import { ServicesSkeleton } from "./_components/ServicesSkeleton";
 import { ServiceList } from "./_components/ServiceList";
 import ServicesSearchBar from "./_components/ServicesSearchBar";
 import Pagination from "./_components/Pagination";
+import ServiceFilter from "@/app/(public)/services/_components/ServiceFilter";
 
 const Services = async ({
-                            searchParams,
-                        }: {
-    searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+    searchParams,
+}: { searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) => {
     return (
         <section className="min-h-screen">
@@ -110,14 +31,21 @@ const Services = async ({
                         <ServicesSearchBar />
                     </div>
                 </div>
-                <Suspense fallback={<ServicesSkeleton />}>
-                    <div className="mt-10">
-                        <ServiceList searchParams={searchParams} />
-                    </div>
-                    <div className="mt-10 flex justify-center">
-                        <Pagination searchParams={searchParams} />
-                    </div>
-                </Suspense>
+                <div className="grid grid-cols-1 gap-8 lg:grid-cols-12">
+                    {/* Filter */}
+                    <aside className="lg:col-span-3">
+                        <ServiceFilter />
+                    </aside>
+                    {/* Services */}
+                    <main className="lg:col-span-9">
+                        <Suspense fallback={<ServicesSkeleton/>}>
+                            <ServiceList searchParams={searchParams} />
+                            <div className="mt-10 flex justify-center">
+                                <Pagination searchParams={searchParams} />
+                            </div>
+                        </Suspense>
+                    </main>
+                </div>
             </div>
         </section>
     );

@@ -1,7 +1,6 @@
 import Navbar from "@/components/shared/Navbar";
 import { getMe } from "@/service/getMe";
 import Footer from "@/components/shared/footer";
-
 const PublicGroupLayout = async (
     {
         children

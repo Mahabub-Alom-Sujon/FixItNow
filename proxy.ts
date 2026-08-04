@@ -6,7 +6,7 @@ import { cookies } from 'next/headers';
 import { getNewAccessToken } from '@/service/refreshToken';
 
 
-const AUTH_ROUTES =["/auth/login", "/auth/register"]
+const AUTH_ROUTES =["/login", "/register"]
 //const PUBLIC_ROUTES = ["/", "/service", "/", "/"]
 // This function can be marked `async` if using `await` inside
 export async function proxy(request: NextRequest) {

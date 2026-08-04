@@ -70,7 +70,7 @@ export default function Navbar({user} : NavbarProps) {
                 description: "See you soon 👋"
             });
 
-            router.replace("/auth/login");
+            router.replace("/login");
 
         } catch (error) {
             console.error("Logout error:", error);
@@ -83,20 +83,20 @@ export default function Navbar({user} : NavbarProps) {
     }
 
     const getDashboardHref = () => {
-        if (!profile) return "/auth/login";
+        if (!profile) return "/login";
 
         switch (profile.role) {
             case "ADMIN":
-                return "/dashboard/admin";
+                return "/admin";
 
             case "TECHNICIAN":
-                return "/dashboard/technician";
+                return "/technician";
 
             case "CUSTOMER":
-                return "/dashboard/customer";
+                return "/customer";
 
             default:
-                return "/auth/login";
+                return "/login";
         }
     };
     return (
@@ -185,10 +185,10 @@ export default function Navbar({user} : NavbarProps) {
                         /* === Not Logged In: Login + Sign Up === */
                         <div className="hidden md:flex items-center gap-3">
                             <Button variant="ghost" asChild>
-                                <Link href="/auth/login">Login</Link>
+                                <Link href="/login">Login</Link>
                             </Button>
                             <Button asChild>
-                                <Link href="/auth/register">Sign Up</Link>
+                                <Link href="/register">Sign Up</Link>
                             </Button>
                         </div>
                     )}
@@ -249,7 +249,7 @@ export default function Navbar({user} : NavbarProps) {
                                     </Button>
                                 </>
                             ) : (
-                                <Link href="/auth/login">
+                                <Link href="/login">
                                     <Button
                                         variant="outline"
                                         className="w-full"

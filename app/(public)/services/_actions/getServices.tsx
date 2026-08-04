@@ -1,16 +1,50 @@
-"use server"
-export const getServices = async ({query } : { query?: { [key: string]: string | string[] | undefined } }) => {
-    const params = new URLSearchParams()
-    if(query && query.searchTerm){
-        params.set("searchTerm", query.searchTerm as string)
+// "use server"
+// export const getServices = async ({query } : { query?: { [key: string]: string | string[] | undefined } }) => {
+//     const params = new URLSearchParams()
+//     if(query && query.searchTerm){
+//         params.set("searchTerm", query.searchTerm as string)
+//     }
+//     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/services?${params.toString()}`, {
+//         cache : "no-cache",
+//         next : {
+//             revalidate : 60 * 60 * 6,
+//         }
+//     });
+//     const result = await res.json();
+//     return result;
+// }
+
+export const getServices = async ({
+      query,
+}: {
+    query?: { [key: string]: string | string[] | undefined };
+}) => {
+    const params = new URLSearchParams();
+    if (query) {
+        Object.entries(query).forEach(([key, value]) => {
+            if (value) {
+                if (Array.isArray(value)) {
+                    value.forEach((v) => params.append(key, v));
+                } else {
+                    params.set(key, value);
+                }
+            }
+        });
     }
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/services?${params.toString()}`, {
-        cache : "no-cache",
-        next : {
-            revalidate : 60 * 60 * 6,
-            // tags : ["premium-posts"]
+
+    const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/services?${params.toString()}`,
+        {
+            cache: "no-cache",
+            next: {
+                revalidate: 60 * 60 * 6,
+            },
         }
-    });
-    const result = await res.json();
-    return result;
-}
+    );
+
+    if (!res.ok) {
+        throw new Error("Failed to fetch services");
+    }
+
+    return res.json();
+};

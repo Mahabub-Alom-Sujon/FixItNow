@@ -1,68 +1,77 @@
-"use server";
+// "use server";
+//
+// import type { TechnicianQuery } from "@/types/types.technicians";
+//
+// //const API_URL = process.env.NEXT_PUBLIC_API_URL;
+//
+// const BASE_URL = process.env.NEXT_PUBLIC_API_URL!;
+//
+// export async function getTechnicians(params: TechnicianQuery) {
+//     const query = new URLSearchParams();
+//
+//     if (params.searchTerm) {
+//         query.append("searchTerm", params.searchTerm);
+//     }
+//
+//     if (params.location) {
+//         query.append("location", params.location);
+//     }
+//
+//     if (params.category) {
+//         query.append("category", params.category);
+//     }
+//
+//     if (params.experience !== undefined) {
+//         query.append("experience", params.experience.toString());
+//     }
+//
+//     if (params.page) {
+//         query.append("page", params.page.toString());
+//     }
+//
+//     if (params.limit) {
+//         query.append("limit", params.limit.toString());
+//     }
+//
+//     if (params.minRating !== undefined) {
+//         query.append("minRating", params.minRating.toString());
+//     }
+//
+//     if (params.maxHourlyRate !== undefined) {
+//         query.append("maxHourlyRate", params.maxHourlyRate.toString());
+//     }
+//
+//     const res = await fetch(
+//         `${BASE_URL}/api/technicians?${query.toString()}`,
+//         {
+//             method: "GET",
+//             headers: {
+//                 "Content-Type": "application/json",
+//             },
+//             cache: "no-store",
+//         }
+//     );
+//
+//     if (!res.ok) {
+//         throw new Error("Failed to fetch technicians");
+//     }
+//
+//     return res.json();
+// }
 
-import { revalidateTag } from "next/cache";
-
-const API_URL = process.env.NEXT_PUBLIC_API_URL;
-
-export interface GetTechniciansParams {
-    searchTerm?: string;
-    location?: string;
-    page?: number;
-    limit?: number;
-    minRating?: number;
-    maxHourlyRate?: number;
-}
-
-export async function getTechnicians(
-    params: GetTechniciansParams = {}
-) {
-    const searchParams = new URLSearchParams();
-
-    if (params.searchTerm) {
-        searchParams.append("searchTerm", params.searchTerm);
+"use server"
+export const getTechnicians = async ({query } : { query?: { [key: string]: string | string[] | undefined } }) => {
+    const params = new URLSearchParams()
+    if(query && query.searchTerm){
+        params.set("searchTerm", query.searchTerm as string)
     }
-
-    if (params.location) {
-        searchParams.append("location", params.location);
-    }
-
-    if (params.page) {
-        searchParams.append("page", params.page.toString());
-    }
-
-    if (params.limit) {
-        searchParams.append("limit", params.limit.toString());
-    }
-
-    if (params.minRating) {
-        searchParams.append("minRating", params.minRating.toString());
-    }
-
-    if (params.maxHourlyRate) {
-        searchParams.append(
-            "maxHourlyRate",
-            params.maxHourlyRate.toString()
-        );
-    }
-
-    const res = await fetch(
-        `${API_URL}/api/technicians?${searchParams.toString()}`,
-        {
-            method: "GET",
-            cache: "no-store",
-            next: {
-                tags: ["technicians"],
-            },
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/technicians?${params.toString()}`, {
+        cache : "no-cache",
+        next : {
+            revalidate : 60 * 60 * 6,
+            // tags : ["premium-posts"]
         }
-    );
-
-    if (!res.ok) {
-        throw new Error("Failed to fetch technicians");
-    }
-
-    return res.json();
-}
-
-export async function revalidateTechnicians() {
-    // revalidateTag("technicians");
+    });
+    const result = await res.json();
+    return result;
 }

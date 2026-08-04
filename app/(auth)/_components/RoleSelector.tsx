@@ -118,7 +118,7 @@ export default function RoleSelector({ onSelect }: Props) {
                 <p className="text-muted-foreground text-sm">
                     Already have an account?{" "}
                     <Link
-                        href="/auth/login"
+                        href="/login"
                         className="text-primary font-semibold transition-colors hover:text-primary/80 hover:underline"
                     >
                         Login

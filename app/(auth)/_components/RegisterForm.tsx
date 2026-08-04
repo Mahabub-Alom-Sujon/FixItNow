@@ -23,7 +23,7 @@ import {
     registerSchema,
 } from "@/schemas/register.schema";
 
-import { registerAction } from "../_actions/registerAction";
+import { registerAction } from "@/app/(auth)/_actions/registerAction";
 
 
 type Role = "CUSTOMER" | "TECHNICIAN";

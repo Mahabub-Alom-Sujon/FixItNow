@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 
-import RegisterForm from "../_components/RegisterForm";
-import RoleSelector from "@/app/auth/_components/RoleSelector";
+import RegisterForm from "@/app/(auth)/_components/RegisterForm";
+import RoleSelector from "@/app/(auth)/_components/RoleSelector";
 
 import { Card } from "@/components/ui/card";
 

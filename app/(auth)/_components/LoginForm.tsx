@@ -4,7 +4,7 @@ import React, { useActionState, useEffect, useState } from "react";
 import Link from "next/link";
 import { Eye, EyeOff, Loader2, Lock, Mail } from "lucide-react";
 import { toast } from "sonner";
-import { loginAction } from "../_actions/authActions";
+import { loginAction } from "@/app/(auth)/_actions/authActions";
 import { Button } from "@/components/ui/button";
 import {
     Card,
@@ -188,7 +188,7 @@ export default function LoginForm() {
                         <p className="text-center text-sm text-muted-foreground">
                             Don't have an account?{" "}
                             <Link
-                                href="/auth/register"
+                                href="/register"
                                 className="font-semibold text-primary hover:underline"
                             >
                                 Create Account

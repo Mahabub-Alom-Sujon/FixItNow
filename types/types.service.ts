@@ -9,6 +9,8 @@ export interface IService {
         type: string;
         location: string;
         rating: number;
+        minPrice:number;
+        maxPrice:number;
         image: string | null;
         createdAt: string;
         updatedAt: string;
