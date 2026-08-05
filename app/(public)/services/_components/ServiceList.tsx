@@ -1,7 +1,6 @@
 import { getServices } from "@/app/(public)/services/_actions/getServices";
 import ServiceCard from "./ServiceCard";
 import { IService } from "@/types/types.service";
-import ServiceFilter from "./ServiceFilter";
 
 export async function ServiceList({
   searchParams,

@@ -53,7 +53,7 @@ const TechnicianCard = ({ tech }: TechnicianCardProps) => {
                     <h3 className="text-xl font-bold text-slate-900">
                         {tech.user.name}
                     </h3>
-                    <p className="text-sm text-slate-500">
+                    <p className="line-clamp-2 text-sm leading-6 text-slate-500">
                         {tech.bio}
                     </p>
                 </div>
@@ -78,18 +78,14 @@ const TechnicianCard = ({ tech }: TechnicianCardProps) => {
                         <p className="text-lg font-bold text-slate-900">
                             {tech.completedJobs}+
                         </p>
-                        <span className="text-xs text-slate-500">
-                            Jobs
-                        </span>
+                        <span className="text-lg">Jobs</span>
                     </div>
                     <div className="h-10 w-px bg-slate-200" />
                     <div className="text-center">
                         <p className="text-lg font-bold text-slate-900">
                             {tech.experience}
                         </p>
-                        <span className="text-xs text-slate-500">
-                            Experience
-                        </span>
+                        <span className="text-lg">Experience</span>
                     </div>
                 </div>
                 <div className="flex items-center justify-between border-t pt-5">

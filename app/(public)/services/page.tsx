@@ -1,9 +1,9 @@
 import { Suspense } from "react";
-import { ServicesSkeleton } from "./_components/ServicesSkeleton";
 import { ServiceList } from "./_components/ServiceList";
 import ServicesSearchBar from "./_components/ServicesSearchBar";
 import Pagination from "./_components/Pagination";
 import ServiceFilter from "@/app/(public)/services/_components/ServiceFilter";
+import ServiceListSkeleton from "@/app/(public)/services/_components/ServiceListSkeleton";
 
 const Services = async ({
     searchParams,
@@ -38,7 +38,7 @@ const Services = async ({
                     </aside>
                     {/* Services */}
                     <main className="lg:col-span-9">
-                        <Suspense fallback={<ServicesSkeleton/>}>
+                        <Suspense fallback={<ServiceListSkeleton/>}>
                             <ServiceList searchParams={searchParams} />
                             <div className="mt-10 flex justify-center">
                                 <Pagination searchParams={searchParams} />

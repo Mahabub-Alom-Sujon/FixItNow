@@ -6,6 +6,7 @@ import Pagination from "./_components/Pagination";
 import TechnicianList from "@/app/(public)/technicians/_components/TechnicianList";
 import { BadgeCheck } from "lucide-react";
 import TechnicianSearchBar from "@/app/(public)/technicians/_components/TechnicianSearchBar";
+import TechnicianListSkeleton from "@/app/(public)/technicians/_components/TechnicianListSkeleton";
 const Technicians = async ({
    searchParams,
 }: {
@@ -31,11 +32,13 @@ const Technicians = async ({
                         <TechnicianSearchBar />
                     </div>
                 </div>
+                <Suspense fallback={<TechnicianListSkeleton/>}>
+                    <TechnicianList searchParams={searchParams} />
+                    <div className="mt-10 flex justify-center">
+                        <Pagination searchParams={searchParams} />
+                    </div>
+                </Suspense>
 
-                <TechnicianList searchParams={searchParams} />
-                <div className="mt-10 flex justify-center">
-                    <Pagination searchParams={searchParams} />
-                </div>
             </div>
         </section>
     );
