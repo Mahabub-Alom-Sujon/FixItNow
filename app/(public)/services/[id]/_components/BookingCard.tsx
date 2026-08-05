@@ -86,24 +86,24 @@ export default function BookingCard({
                     No payment required to request a booking.
                 </p>
 
-                <Separator />
+                {/*<Separator />*/}
 
-                <div className="rounded-xl bg-muted/40 p-0 text-center">
-                    <p className="text-xs text-muted-foreground">
-                        This technician offers
-                    </p>
+                {/*<div className="rounded-xl bg-muted/40 p-0 text-center">*/}
+                {/*    <p className="text-xs text-muted-foreground">*/}
+                {/*        This technician offers*/}
+                {/*    </p>*/}
 
-                    <p className="text-lg font-semibold text-blue-600">
-                        {/*{serviceCount} Services*/}
-                    </p>
+                {/*    <p className="text-lg font-semibold text-blue-600">*/}
+                {/*        /!*{serviceCount} Services*!/*/}
+                {/*    </p>*/}
 
-                    {/*<Button asChild variant="link" className="mt-1 h-auto p-0">*/}
-                    {/*    <Link href={`/technicians/${technicianId}`}>*/}
-                    {/*        View All Services*/}
-                    {/*        <ArrowRight className="ml-1 size-4" />*/}
-                    {/*    </Link>*/}
-                    {/*</Button>*/}
-                </div>
+                {/*    <Button asChild variant="link" className="mt-1 h-auto p-0">*/}
+                {/*        <Link href={`/technicians/${technicianId}`}>*/}
+                {/*            View All Services*/}
+                {/*            <ArrowRight className="ml-1 size-4" />*/}
+                {/*        </Link>*/}
+                {/*    </Button>*/}
+                {/*</div>*/}
             </CardContent>
         </Card>
     );
