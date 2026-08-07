@@ -1,4 +1,4 @@
-"use client";
+"use client"
 import Link from "next/link";
 import { useState } from "react";
 import {Menu, X, Wrench, User, Bell, Search, LayoutDashboard, Settings, LogOut} from "lucide-react";
@@ -87,13 +87,13 @@ export default function Navbar({user} : NavbarProps) {
 
         switch (profile.role) {
             case "ADMIN":
-                return "/admin";
+                return "/admin/dashboard";
 
             case "TECHNICIAN":
-                return "/technician";
+                return "/dashboard/technician";
 
             case "CUSTOMER":
-                return "/customer";
+                return "/dashboard/customer";
 
             default:
                 return "/login";

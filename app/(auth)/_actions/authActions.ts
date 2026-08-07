@@ -50,7 +50,7 @@ export const loginAction = async (prevState : LoginState , formData: FormData) =
         if(decodedToken.role === "CUSTOMER"){
             redirect("/dashboard/customer");
         } else if (decodedToken.role === "ADMIN"){
-            redirect("/dashboard/admin");
+            redirect("/admin/dashboard");
         } else if (decodedToken.role === "TECHNICIAN"){
             redirect("/dashboard/technician");
         }

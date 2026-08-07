@@ -11,12 +11,11 @@ import {
 } from "@/components/ui/breadcrumb";
 
 interface BreadcrumbNavProps {
-    category: string;
+    // category: string;
     serviceTitle: string;
 }
 
 export default function BreadcrumbNav({
-  category,
   serviceTitle,
 }: BreadcrumbNavProps) {
     return (

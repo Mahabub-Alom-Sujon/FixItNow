@@ -16,8 +16,8 @@ export default function ServiceDetails({
     return (
         <>
             <BreadcrumbNav
-                category={service.category.name}
-                serviceTitle={service.title}
+                // category={service.category.name}
+                serviceTitle={service?.title}
             />
 
             <div className="grid gap-8 lg:grid-cols-3 mt-10">
