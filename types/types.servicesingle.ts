@@ -1,3 +1,14 @@
+export interface IAvailability {
+    id: string;
+    technicianId: string;
+    dayOfWeek: number;
+    startTime: string;
+    endTime: string;
+    isAvailable: boolean;
+    createdAt: string;
+    updatedAt: string;
+}
+
 export interface IServiceDetails {
     id: string;
     title: string;
@@ -12,14 +23,16 @@ export interface IServiceDetails {
     categoryId: string;
     createdAt: string;
     updatedAt: string;
+
     category: {
         id: string;
         name: string;
         description: string | null;
-        icon: string | null;
+        icon: string |null;
         createdAt: string;
         updatedAt: string;
     };
+
     technician: {
         id: string;
         bio: string;
@@ -30,12 +43,16 @@ export interface IServiceDetails {
         averageRating: number;
         totalReviews: number;
         completedJobs: number;
+
+        availability: IAvailability[];
+
         user: {
             id: string;
             name: string;
-            profileImage: string;
+            profileImage: string | null;
         };
     };
+
     bookings: [];
 }
 

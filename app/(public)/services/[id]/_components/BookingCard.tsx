@@ -10,19 +10,32 @@ import {
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import AvailabilityDialog from "@/app/(public)/services/[id]/_components/AvailabilityDialog";
+
+interface Availability {
+    id: string;
+    technicianId: string;
+    dayOfWeek: number;
+    startTime: string;
+    endTime: string;
+    isAvailable: boolean;
+}
 
 interface BookingCardProps {
     price: number;
     duration: number;
-    // serviceCount: number;
     technicianId: string;
+    serviceId: string;
+    availability: Availability[];
 }
 
 export default function BookingCard({
     price,
     duration,
+    availability,
     // serviceCount,
     technicianId,
+    serviceId
 }: BookingCardProps) {
     return (
         <Card className="sticky top-24 w-full max-w-sm rounded-2xl border shadow-md">
@@ -78,32 +91,17 @@ export default function BookingCard({
                     </div>
                 </div>
 
-                <Button size="lg" className="w-full rounded-xl">
-                    Book Now
-                </Button>
-
+                {/*<Button size="lg" className="w-full rounded-xl">*/}
+                {/*    Book Now*/}
+                {/*</Button>*/}
+                <AvailabilityDialog
+                    availability={availability}
+                    technicianId={technicianId}
+                    serviceId={serviceId}
+                />
                 <p className="text-center text-xs text-muted-foreground">
                     No payment required to request a booking.
                 </p>
-
-                {/*<Separator />*/}
-
-                {/*<div className="rounded-xl bg-muted/40 p-0 text-center">*/}
-                {/*    <p className="text-xs text-muted-foreground">*/}
-                {/*        This technician offers*/}
-                {/*    </p>*/}
-
-                {/*    <p className="text-lg font-semibold text-blue-600">*/}
-                {/*        /!*{serviceCount} Services*!/*/}
-                {/*    </p>*/}
-
-                {/*    <Button asChild variant="link" className="mt-1 h-auto p-0">*/}
-                {/*        <Link href={`/technicians/${technicianId}`}>*/}
-                {/*            View All Services*/}
-                {/*            <ArrowRight className="ml-1 size-4" />*/}
-                {/*        </Link>*/}
-                {/*    </Button>*/}
-                {/*</div>*/}
             </CardContent>
         </Card>
     );

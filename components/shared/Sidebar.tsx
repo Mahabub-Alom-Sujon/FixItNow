@@ -30,11 +30,11 @@ interface NavItem {
 }
 
 const customerNavItems: NavItem[] = [
-    { href: "/dashboard", label: "Dashboard", icon: <LayoutDashboard className="h-4 w-4" /> },
-    { href: "/bookings", label: "My Bookings", icon: <CalendarCheck className="h-4 w-4" /> },
-    { href: "/payments", label: "Payments", icon: <CreditCard className="h-4 w-4" /> },
-    { href: "/reviews", label: "My Reviews", icon: <Star className="h-4 w-4" /> },
-    { href: "/profile", label: "Profile", icon: <Settings className="h-4 w-4" /> },
+    { href: "/dashboard/customer", label: "Dashboard", icon: <LayoutDashboard className="h-4 w-4" /> },
+    { href: "/dashboard/bookings", label: "My Bookings", icon: <CalendarCheck className="h-4 w-4" /> },
+    { href: "/dashboard/payments", label: "Payments", icon: <CreditCard className="h-4 w-4" /> },
+    { href: "/dashboard/reviews", label: "My Reviews", icon: <Star className="h-4 w-4" /> },
+    { href: "/dashboard/profile", label: "Profile", icon: <Settings className="h-4 w-4" /> },
 ];
 
 const technicianNavItems: NavItem[] = [

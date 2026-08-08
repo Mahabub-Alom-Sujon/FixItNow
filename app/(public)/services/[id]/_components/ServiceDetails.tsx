@@ -35,7 +35,10 @@ export default function ServiceDetails({
                     <BookingCard
                         price={service.price}
                         duration={service.duration}
-                        technicianId={service.technician.id}
+                        //technicianId={service.technician.id}
+                        technicianId={service.technicianId}
+                        serviceId={service.id}
+                        availability={service.technician.availability}
                         // serviceCount={service.technician.services.length}
                     />
                 </aside>

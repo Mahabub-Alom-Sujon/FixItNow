@@ -94,7 +94,7 @@ function PaymentSuccessContent() {
                         <Button
                             size="lg"
                             className="w-full"
-                            onClick={() => router.push(`/bookings/${bookingId}`)}
+                            onClick={() => router.push(`/dashboard/bookings/${bookingId}`)}
                         >
                             <ArrowRight className="mr-2 h-4 w-4" />
                             View Booking
@@ -103,7 +103,7 @@ function PaymentSuccessContent() {
                             variant="outline"
                             size="lg"
                             className="w-full"
-                            onClick={() => router.push("/dashboard")}
+                            onClick={() => router.push("/dashboard/customer")}
                         >
                             <LayoutDashboard className="mr-2 h-4 w-4" />
                             Go to Dashboard
